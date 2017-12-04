@@ -1,6 +1,6 @@
 # candypaint
 
-Prompts for the ion shell. Tested on Linux only.
+Candy coated prompts for the ion shell. Tested on Linux only, for now.
 
 ## Installation
 
@@ -17,5 +17,11 @@ fn PROMPT
     echo -n $(candypaint)
 end
 ```
+
+## Goals
+
+This project aims to provide zero-config prompts for ion. Prompt modifications
+might get deeper integration into ion in the future, but until then we can use
+a dedicated tool to shell out to in our initrc.
 
 
