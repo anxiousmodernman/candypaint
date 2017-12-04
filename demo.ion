@@ -1,4 +1,0 @@
-#!/usr/bin/env ion
-
-ion -c 'echo '"$(candypaint chad)"
-
