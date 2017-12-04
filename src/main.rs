@@ -3,13 +3,11 @@ extern crate clap;
 use clap::{App,Arg}; 
 use std::env;
 
-// TODO this doesn't really work
-static DEFAULT_PROMPT: &'static str = "${c::0xde,bold}c${c::0xdd}o${c::0xdc}l${c::0xdb}e${c::0xda}m${c::0xd9}a${c::0xd8}n${c::0xd7}:${c::0xd6}$basename(${SWD})${c::0x05} # ${c::reset}";
  
 fn main() { 
     let matches = App::new("candypaint")
        .version("0.1.0")
-       .about("candy coated ion shell prompts")
+       .about("candy coated prompts for the ion shell")
        .author("Coleman Emery McFarland")
        .arg(Arg::with_name("theme").help("theme name").required(false))
        .get_matches(); 
@@ -27,13 +25,13 @@ fn main() {
     println!("{}", prompt.unwrap_or(String::from("# ${c::reset}")));
 }
 
+/// chad is our default theme.
 fn chad() -> Option<String> {
 
     let mut ret = String::new();
 
     let range: Vec<i32> = (0xd6..0xde).rev().collect();
 
-    // get user
     if let Ok(user) = env::var("USER") {
         for (i, c) in user.chars().enumerate() {
             if let Some(num) = range.get(i) {
@@ -55,7 +53,6 @@ fn chad() -> Option<String> {
         }
     }
 
-    // expand user
     ret.push_str("${c::0x05} # ${c::reset}");
 
     Some(ret)
