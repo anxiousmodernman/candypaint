@@ -2,6 +2,7 @@ extern crate clap;
 
 use clap::{App,Arg}; 
 use std::env;
+use std::path::Path;
 
  
 fn main() { 
@@ -19,7 +20,7 @@ fn main() {
                 _ => chad(),
             }
         },
-        _ => Some(String::from(DEFAULT_PROMPT)), // this shouldn't happen, but we have a fallback anyway
+        _ => None, 
     };
 
     println!("{}", prompt.unwrap_or(String::from("# ${c::reset}")));
@@ -53,7 +54,11 @@ fn chad() -> Option<String> {
         }
     }
 
-    ret.push_str("${c::0x05} # ${c::reset}");
+    if Path::new(".git").exists() {
+        ret.push_str(" (${git::branch}) ${c::0x05}# ${c::reset}");
+    } else {
+        ret.push_str(" ${c::0x05} # ${c::reset}");
+    }
 
     Some(ret)
 }
