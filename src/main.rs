@@ -54,12 +54,16 @@ fn chad() -> Option<String> {
         }
     }
 
-    if Path::new(".git").exists() {
+    if is_git() {
         ret.push_str(" (${git::branch}) ${c::0x05}# ${c::reset}");
     } else {
-        ret.push_str(" ${c::0x05} # ${c::reset}");
+        ret.push_str(" ${c::0x05}# ${c::reset}");
     }
 
     Some(ret)
+}
+
+fn is_git() -> bool {
+    Path::new(".git").exists()
 }
 
