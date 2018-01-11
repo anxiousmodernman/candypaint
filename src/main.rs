@@ -17,6 +17,7 @@ fn main() {
         Some(theme) => {
             match theme {
                 "chad" => chad(),
+                "darkside" => darkside(),
                 _ => chad(),
             }
         },
@@ -63,7 +64,69 @@ fn chad() -> Option<String> {
     Some(ret)
 }
 
+fn darkside() -> Option<String> {
+    let mut ret = String::new();
+
+    // fixed width
+    // dark -> light
+    // 45 chars
+    //
+
+    // push current dir
+    if let Ok(path) = env::current_dir() {
+        let p = path.as_path();
+        if let Some(s) = p.to_str() {
+            ret.push_str(s);
+        }
+    }
+
+    // black -> light grey
+    let range: Vec<i32> = (0xe8..0xfe).collect();
+
+    let mut temp = String::new();
+    let length = ret.len();
+
+    let mut idx = 0;
+    for (i, c) in ret.chars().enumerate() {
+        let mut inc = false;
+        if length > range.len() {
+            if i < (length - range.len()) {
+                continue
+            }
+            inc = true;
+        } else {
+            inc = true;
+        }
+        if let Some(num) = range.get(idx) {
+            temp.push_str("${c::0x");
+            let s = format!("{:X},bold}}{}", num, c);
+            temp.push_str(&s);
+        } else { 
+            break 
+        }
+        if inc {
+            idx += 1; 
+        }
+    }
+    temp.push_str(" ${c::0x34}>> ${c::reset}");
+
+    Some(temp)
+}
+
 fn is_git() -> bool {
     Path::new(".git").exists()
 }
 
+
+fn apply_range(s: &mut String, range: Vec<i32>) {
+
+    let length = s.len();
+    // how many of our range do we need to repeat to get to length?
+    let repeat = length / range.len();
+    let mut new_s = String::new(); 
+
+    for (i, x) in s.chars().enumerate() {
+
+    }
+
+}
