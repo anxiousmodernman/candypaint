@@ -47,7 +47,7 @@ fn chad() -> Option<String> {
     }
 
     if let Ok(path) = env::current_dir() {
-        if let Some(pwd) = path.file_stem() {
+        if let Some(pwd) = path.file_name() {
             ret.push_str("${c::0xd6}");
             let s = format!("{}", pwd.to_str().unwrap_or(""));
             ret.push_str(&s)
