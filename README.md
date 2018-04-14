@@ -15,7 +15,10 @@ Then, add the following to **~/.config/ion/initrc**
 ```sh
 # use the "chad" theme as your prompt
 fn PROMPT
-    echo -n $(candypaint chad)
+    let tmp = "/tmp/candypaint"
+    echo -n $(candypaint chad) > $tmp
+    source $tmp
+    echo -n $CANDY
 end
 ```
 

@@ -3,6 +3,7 @@ extern crate clap;
 use clap::{App,Arg}; 
 use std::env;
 use std::path::Path;
+//use std::io::{File, Open, Write};
 
  
 fn main() { 
@@ -24,7 +25,7 @@ fn main() {
         _ => None, 
     };
 
-    println!("{}", prompt.unwrap_or(String::from("# ${c::reset}")));
+    println!("export CANDY = \"{}\"", prompt.unwrap_or(String::from("export CANDY = \"# ${c::reset}\"")));
 }
 
 /// chad is our default theme.
