@@ -34,8 +34,12 @@ We have 2 so far.
 
 **chad**
 
+![chad](assets/chad.png)
+
 
 **darkside**
+
+![darkside](assets/darkside.png)
 
 
 A theme is simply a function that returns `Option<String>` built from your 
