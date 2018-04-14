@@ -22,6 +22,10 @@ fn PROMPT
 end
 ```
 
+In this example, candypaint writes a script to `$tmp`. That script exports a 
+`CANDY` variable, our dynamically generated prompt. It must be sourced by ion
+to interpret the escape characters correctly.
+
 ## Overview
 
 This project aims to provide zero-config prompts for ion. Prompt modifications
