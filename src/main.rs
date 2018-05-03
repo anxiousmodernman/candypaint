@@ -2,8 +2,6 @@ extern crate clap;
 
 use clap::{App,Arg}; 
 use std::env;
-use std::path::Path;
-//use std::io::{File, Open, Write};
 
  
 fn main() { 
@@ -19,6 +17,10 @@ fn main() {
             match theme {
                 "chad" => chad(),
                 "darkside" => darkside(),
+                "debug" => {
+                  println!("{:?}", git_info());
+                  None
+                },
                 _ => chad(),
             }
         },
@@ -56,8 +58,9 @@ fn chad() -> Option<String> {
         }
     }
 
-    if is_git() {
-        ret.push_str(" (${git::branch}) ${c::0x05}# ${c::reset}");
+    if let Some(git_info) = git_info() {
+        //ret.push_str(" (${git::branch}) ${c::0x05}# ${c::reset}");
+        ret.push_str(&format!(" ({}) ${{c::0x05}}# ${{c::reset}}", git_info.branch));
     } else {
         ret.push_str(" ${c::0x05}# ${c::reset}");
     }
@@ -65,6 +68,7 @@ fn chad() -> Option<String> {
     Some(ret)
 }
 
+/// darkside is scary.
 fn darkside() -> Option<String> {
     let mut ret = String::new();
 
@@ -114,8 +118,22 @@ fn darkside() -> Option<String> {
     Some(temp)
 }
 
-fn is_git() -> bool {
-    Path::new(".git").exists()
+fn git_info() -> Option<GitInfo> {
+    use std::process::Command;
+    let mut cmd = Command::new("git");
+    cmd.args(vec!["rev-parse", "--symbolic-full-name", "--abbrev-ref", "HEAD"]);
+    let output = cmd.output().ok()?;
+    if !output.status.success() {
+        return None
+    }
+    let branch = String::from_utf8(output.stdout).ok()?;
+    Some(GitInfo{ branch: branch })
+}
+
+/// GitInfo holds state related to the current git repo, if present.
+#[derive(Debug)]
+struct GitInfo {
+    branch: String,
 }
 
 
