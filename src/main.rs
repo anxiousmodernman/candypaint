@@ -106,7 +106,7 @@ fn darkside() -> Option<String> {
             idx += 1; 
         }
     }
-    temp.push_str(" ${c::0x34}>> ${c::reset}");
+    temp.push_str(" ${c::0x7c}>> ${c::reset}");
 
     Some(temp)
 }
