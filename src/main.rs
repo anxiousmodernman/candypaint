@@ -59,7 +59,7 @@ fn chad() -> Option<String> {
     }
 
     if let Some(git_info) = git_info() {
-        ret.push_str(&format!(" ({}) ${{c::0x05}}# ${{c::reset}}", &git_info.branch.trim()));
+        ret.push_str(&format!(" (${{c::0xb8}}{}${{c::0xd6}}) ${{c::0x05}}# ${{c::reset}}", &git_info.branch.trim()));
     } else {
         ret.push_str(" ${c::0x05}# ${c::reset}");
     }
