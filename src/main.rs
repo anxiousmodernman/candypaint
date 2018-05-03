@@ -106,8 +106,12 @@ fn darkside() -> Option<String> {
             idx += 1; 
         }
     }
-    temp.push_str(" ${c::0x7c}>> ${c::reset}");
-
+    if let Some(git_info) = git_info() {
+        let s = format!(" ${{c::0x7c}}<<{}${{c::0x7c}}>> ${{c::reset}}", &git_info.branch.trim());
+        temp.push_str(&s);
+    } else {
+        temp.push_str(" ${c::0x7c}>> ${c::reset}");
+    }
     Some(temp)
 }
 
