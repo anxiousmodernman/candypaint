@@ -59,8 +59,7 @@ fn chad() -> Option<String> {
     }
 
     if let Some(git_info) = git_info() {
-        //ret.push_str(" (${git::branch}) ${c::0x05}# ${c::reset}");
-        ret.push_str(&format!(" ({}) ${{c::0x05}}# ${{c::reset}}", git_info.branch));
+        ret.push_str(&format!(" ({}) ${{c::0x05}}# ${{c::reset}}", &git_info.branch.trim()));
     } else {
         ret.push_str(" ${c::0x05}# ${c::reset}");
     }
@@ -72,12 +71,6 @@ fn chad() -> Option<String> {
 fn darkside() -> Option<String> {
     let mut ret = String::new();
 
-    // fixed width
-    // dark -> light
-    // 45 chars
-    //
-
-    // push current dir
     if let Ok(path) = env::current_dir() {
         let p = path.as_path();
         if let Some(s) = p.to_str() {
@@ -93,7 +86,7 @@ fn darkside() -> Option<String> {
 
     let mut idx = 0;
     for (i, c) in ret.chars().enumerate() {
-        let mut inc = false;
+        let mut inc: bool;
         if length > range.len() {
             if i < (length - range.len()) {
                 continue
@@ -137,15 +130,3 @@ struct GitInfo {
 }
 
 
-fn apply_range(s: &mut String, range: Vec<i32>) {
-
-    let length = s.len();
-    // how many of our range do we need to repeat to get to length?
-    let repeat = length / range.len();
-    let mut new_s = String::new(); 
-
-    for (i, x) in s.chars().enumerate() {
-
-    }
-
-}
