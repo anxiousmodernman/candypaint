@@ -6,7 +6,7 @@ use std::env;
  
 fn main() { 
     let matches = App::new("candypaint")
-       .version("0.1.0")
+       .version("0.2.0")
        .about("candy coated prompts for the ion shell")
        .author("Coleman Emery McFarland")
        .arg(Arg::with_name("theme").help("theme name").required(false))
@@ -17,10 +17,6 @@ fn main() {
             match theme {
                 "chad" => chad(),
                 "darkside" => darkside(),
-                "debug" => {
-                  println!("{:?}", git_info());
-                  None
-                },
                 _ => chad(),
             }
         },
@@ -29,6 +25,7 @@ fn main() {
 
     println!("export CANDY = \"{}\"", prompt.unwrap_or(String::from("export CANDY = \"# ${c::reset}\"")));
 }
+
 
 /// chad is our default theme.
 fn chad() -> Option<String> {
@@ -69,12 +66,11 @@ fn chad() -> Option<String> {
 
 /// darkside is scary.
 fn darkside() -> Option<String> {
-    let mut ret = String::new();
 
-    if let Ok(path) = env::current_dir() {
-        let p = path.as_path();
-        if let Some(s) = p.to_str() {
-            ret.push_str(s);
+    let mut path = String::new();
+    if let Ok(cwd) = env::current_dir() {
+        if let Some(val) = cwd.as_path().to_str() {
+            path.push_str(val);
         }
     }
 
@@ -82,10 +78,10 @@ fn darkside() -> Option<String> {
     let range: Vec<i32> = (0xe8..0xfe).collect();
 
     let mut temp = String::new();
-    let length = ret.len();
+    let length = path.len();
 
     let mut idx = 0;
-    for (i, c) in ret.chars().enumerate() {
+    for (i, c) in path.chars().enumerate() {
         let mut inc: bool;
         if length > range.len() {
             if i < (length - range.len()) {
